@@ -16,7 +16,17 @@ class EventService {
       });
     }
   }
-  withdraw() {}
+  withdraw(withdrawPayload) {
+    const { id, amount } = withdrawPayload;
+
+    const user = getUser(id);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.balance -= amount;
+  }
   transfer() {}
 }
 

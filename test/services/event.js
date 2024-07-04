@@ -40,3 +40,40 @@ describe("deposit", () => {
     assert.deepEqual(getUser(depositPayload.id), { id: 11, balance: 40 });
   });
 });
+
+describe("withdraw", () => {
+  beforeEach(() => refreshDatabase());
+
+  it("Should withdraw properly if account exists", () => {
+    const userData = {
+      id: 12,
+      balance: 35,
+    };
+    createUser(userData);
+
+    const withdrawPayload = {
+      id: 12,
+      amount: 20,
+    };
+
+    assert.deepEqual(getUser(userData.id), { id: 12, balance: 35 });
+
+    new EventService().withdraw(withdrawPayload);
+
+    assert.deepEqual(getUser(userData.id), { id: 12, balance: 15 });
+  });
+  it("Should fail to withdraw if account not existent", () => {
+    const withdrawPayload = {
+      id: 12,
+      amount: 20,
+    };
+
+    assert.deepEqual(getUser(withdrawPayload.id), undefined);
+
+    assert.throws(() => {
+      new EventService().withdraw(withdrawPayload);
+    });
+
+    assert.deepEqual(getUser(withdrawPayload.id), undefined);
+  });
+});
