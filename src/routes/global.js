@@ -1,11 +1,8 @@
 const { Router } = require("express");
-const { GlobalService } = require("../services/global");
+const { resetDatabase } = require("../controllers/global");
 
 const globalRouter = Router();
 
-globalRouter.post("/reset", (_req, res) => {
-  new GlobalService().resetDatabase();
-  res.send("ok");
-});
+globalRouter.post("/reset", resetDatabase);
 
 module.exports = { globalRouter };
