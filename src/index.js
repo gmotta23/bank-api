@@ -7,6 +7,10 @@ const port = 8000;
 
 app.use("/", globalRouter);
 
-app.listen(port, () => {
-  console.log(`Server running at port ${port}`);
-});
+if (process.env.ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Server running at port ${port}`);
+  });
+}
+
+module.exports = { app };
