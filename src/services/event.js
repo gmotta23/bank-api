@@ -27,7 +27,23 @@ class EventService {
 
     user.balance -= amount;
   }
-  transfer() {}
+  transfer(transferPayload) {
+    const { origin, destination, amount } = transferPayload;
+
+    const originUser = getUser(origin);
+    const destinationUser = getUser(destination);
+
+    if (!originUser) {
+      throw new Error("Origin user not found");
+    }
+
+    if (!destinationUser) {
+      throw new Error("Destination user not found");
+    }
+
+    originUser.balance -= amount;
+    destinationUser.balance += amount;
+  }
 }
 
 module.exports = { EventService };

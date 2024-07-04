@@ -77,3 +77,65 @@ describe("withdraw", () => {
     assert.deepEqual(getUser(withdrawPayload.id), undefined);
   });
 });
+
+describe("transfer", () => {
+  beforeEach(() => refreshDatabase());
+
+  it("Should transfer properly from an existing account", () => {
+    const userDataOrigin = {
+      id: 45,
+      balance: 400,
+    };
+
+    const userDataDestination = {
+      id: 49,
+      balance: 30,
+    };
+
+    createUser(userDataOrigin);
+    createUser(userDataDestination);
+
+    assert.deepEqual(getUser(userDataOrigin.id), { id: 45, balance: 400 });
+    assert.deepEqual(getUser(userDataDestination.id), { id: 49, balance: 30 });
+
+    const transferPayload = {
+      origin: 45,
+      destination: 49,
+      amount: 100,
+    };
+
+    new EventService().transfer(transferPayload);
+
+    assert.deepEqual(getUser(userDataOrigin.id), { id: 45, balance: 300 });
+    assert.deepEqual(getUser(userDataDestination.id), { id: 49, balance: 130 });
+  });
+  it("Should fail to transfer from non existent account", () => {
+    const nonExistingUserOrigin = {
+      id: 45,
+      balance: 400,
+    };
+
+    const userDataDestination = {
+      id: 51,
+      balance: 34,
+    };
+
+    createUser(userDataDestination);
+
+    assert.deepEqual(getUser(nonExistingUserOrigin), undefined);
+    assert.deepEqual(getUser(userDataDestination.id), { id: 51, balance: 34 });
+
+    const transferPayload = {
+      origin: 45,
+      destination: 51,
+      amount: 200,
+    };
+
+    assert.throws(() => {
+      new EventService().transfer(transferPayload);
+    });
+
+    assert.deepEqual(getUser(nonExistingUserOrigin), undefined);
+    assert.deepEqual(getUser(userDataDestination.id), { id: 51, balance: 34 });
+  });
+});
