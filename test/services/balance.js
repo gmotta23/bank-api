@@ -3,7 +3,7 @@ const assert = require("assert");
 
 const { BalanceService } = require("../../src/services/balance");
 const { refreshDatabase } = require("../../src/database");
-const { createUser, getUser } = require("../../src/database/user");
+const { createUser } = require("../../src/database/user");
 
 describe("get", () => {
   beforeEach(() => refreshDatabase());
