@@ -3,7 +3,7 @@ const assert = require("assert");
 
 const { GlobalService } = require("../../src/services/global");
 const { database } = require("../../src/database");
-const { createUser, getUser } = require("../../src/database/user");
+const { createUser } = require("../../src/database/user");
 
 describe("reset", () => {
   it("Should reset database", () => {
