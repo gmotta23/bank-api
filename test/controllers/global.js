@@ -20,7 +20,7 @@ describe("/reset", () => {
       .post("/reset")
       .expect(200)
       .end((_err, res) => {
-        assert.equal(res.text, "ok");
+        assert.equal(res.text, "OK");
         assert.equal(Object.keys(database.users).length, 0);
       });
   });

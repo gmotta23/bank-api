@@ -31,14 +31,18 @@ class EventService {
     const { origin, destination, amount } = transferPayload;
 
     const originUser = getUser(origin);
-    const destinationUser = getUser(destination);
+    let destinationUser = getUser(destination);
 
     if (!originUser) {
       throw new Error("Origin user not found");
     }
 
     if (!destinationUser) {
-      throw new Error("Destination user not found");
+      destinationUser = {
+        id: destination,
+        balance: amount,
+      };
+      createUser(destinationUser);
     }
 
     originUser.balance -= amount;
