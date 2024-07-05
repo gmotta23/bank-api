@@ -15,9 +15,46 @@ const deposit = (req, res) => {
   res.status(201).send({ destination: { ...user } });
 };
 
-const withdraw = (req, res) => {};
+const withdraw = (req, res) => {
+  const { origin, amount } = req.body;
+  const withdrawPayload = {
+    id: origin,
+    amount,
+  };
 
-const transfer = (req, res) => {};
+  try {
+    new EventService().withdraw(withdrawPayload);
+  } catch (error) {
+    return res.status(404).send({ error: error.message });
+  }
+
+  const user = getUser(origin);
+
+  res.status(201).send({ origin: { ...user } });
+};
+
+const transfer = (req, res) => {
+  const { origin, destination, amount } = req.body;
+
+  const transferPayload = {
+    origin,
+    destination,
+    amount,
+  };
+
+  try {
+    new EventService().transfer(transferPayload);
+  } catch {
+    return res.status(404).send({ error: error.message });
+  }
+
+  const userOrigin = getUser(origin);
+  const userDestination = getUser(destination);
+
+  res
+    .status(201)
+    .send({ origin: { ...userOrigin }, destination: { ...userDestination } });
+};
 
 const eventMap = Object.freeze({
   deposit,
@@ -31,7 +68,7 @@ const handleEvent = (req, res) => {
   const eventHandler = eventMap[type];
 
   if (!eventHandler) {
-    res.status(400).send("Invalid event type");
+    return res.status(400).send("Invalid event type");
   }
 
   eventHandler(req, res);
