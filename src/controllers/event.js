@@ -24,8 +24,8 @@ const withdraw = (req, res) => {
 
   try {
     new EventService().withdraw(withdrawPayload);
-  } catch (error) {
-    return res.status(404).send({ error: error.message });
+  } catch {
+    return res.status(404).send("0");
   }
 
   const user = getUser(origin);
@@ -45,7 +45,7 @@ const transfer = (req, res) => {
   try {
     new EventService().transfer(transferPayload);
   } catch {
-    return res.status(404).send({ error: error.message });
+    return res.status(404).send("0");
   }
 
   const userOrigin = getUser(origin);

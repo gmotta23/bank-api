@@ -6,7 +6,7 @@ const getUserBalance = (req, res) => {
     const balance = new BalanceService().getUserBalance(account_id);
     res.send(balance.toString());
   } catch (error) {
-    res.status(404).send({ error: error.message });
+    res.status(404).send("0");
   }
 };
 
