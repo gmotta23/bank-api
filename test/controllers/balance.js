@@ -2,7 +2,7 @@ const { describe, it, beforeEach } = require("node:test");
 const assert = require("assert");
 const request = require("supertest");
 
-const { database, refreshDatabase } = require("../../src/database");
+const { refreshDatabase } = require("../../src/database");
 const { createUser } = require("../../src/database/user");
 const { app } = require("../../src");
 
