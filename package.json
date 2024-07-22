@@ -1,13 +1,13 @@
 {
   "name": "bank-api-example",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "src/index.js",
   "engines": {
     "npm": ">=10.7.0",
     "node": ">=20.15.0"
   },
   "scripts": {
-    "dev": "nodemon index",
+    "dev": "nodemon",
     "test": "ENV=test node --test"
   },
   "keywords": [],
