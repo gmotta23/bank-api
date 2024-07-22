@@ -25,7 +25,7 @@ class EventService {
       throw new Error("User not found");
     }
 
-    user.balance -= amount;
+    setBalance(id, user.balance - amount);
   }
   transfer(transferPayload) {
     const { origin, destination, amount } = transferPayload;
@@ -45,8 +45,8 @@ class EventService {
       createUser(destinationUser);
     }
 
-    originUser.balance -= amount;
-    destinationUser.balance += amount;
+    setBalance(originUser.id, originUser.balance - amount);
+    setBalance(destinationUser.id, destinationUser.balance + amount);
   }
 }
 
