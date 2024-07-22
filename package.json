@@ -1,5 +1,5 @@
 {
-  "name": "ebanx-test",
+  "name": "bank-api-example",
   "version": "1.0.0",
   "main": "src/index.js",
   "engines": {
